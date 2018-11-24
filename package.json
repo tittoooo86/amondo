@@ -1,0 +1,81 @@
+{
+    "name": "Amondo",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "dev": "next -p 7777",
+        "build": "next build",
+        "start": "next start",
+        "test": "NODE_ENV=test jest --watchAll",
+        "heroku-postbuild": "next build"
+    },
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+        "babel-core": "^7.0.0-bridge.0",
+        "babel-plugin-styled-components": "^1.7.1",
+        "next": "^7.0.0",
+        "prop-types": "^15.6.2",
+        "react": "^16.5.2",
+        "react-dom": "^16.5.2",
+        "styled-components": "^3.4.9"
+    },
+    "devDependencies": {
+        "babel-jest": "^23.6.0",
+        "babel-plugin-module-resolver": "^3.1.1"
+    },
+    "babel": {
+        "env": {
+            "development": {
+                "presets": [
+                    "next/babel"
+                ],
+                "plugins": [
+                    [
+                        "styled-components",
+                        {
+                            "ssr": true,
+                            "displayName": true
+                        }
+                    ]
+                ]
+            },
+            "production": {
+                "presets": [
+                    "next/babel"
+                ],
+                "plugins": [
+                    [
+                        "styled-components",
+                        {
+                            "ssr": true,
+                            "displayName": true
+                        }
+                    ]
+                ]
+            },
+            "test": {
+                "presets": [
+                    [
+                        "next/babel",
+                        {
+                            "preset-env": {
+                                "modules": "commonjs"
+                            }
+                        }
+                    ]
+                ],
+                "plugins": [
+                    [
+                        "styled-components",
+                        {
+                            "ssr": true,
+                            "displayName": true
+                        }
+                    ]
+                ]
+            }
+        }
+    }
+}
