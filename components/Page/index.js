@@ -35,13 +35,14 @@ injectGlobal`
     margin: 0;
     font-size: 1.5rem;
     line-height: 2;
-    font-family: 'franklin-gothic-urw-comp', sans-serif;;
+    font-family: 'franklin-gothic-urw', sans-serif;
+    background: #000;
   }
   a {
     text-decoration: none;
     color: ${theme.black};
   }
-  button {  font-family: 'franklin-gothic-urw-comp', sans-serif; }
+  button {  font-family: 'franklin-gothic-urw', sans-serif; }
 `;
 export default class Page extends Component {
     render() {

@@ -1,6 +1,12 @@
+import Hero from "../components/Hero";
+import Imprints from "../components/Imprints";
+import Footer from "../components/Footer";
+
 const Home = props => (
     <div>
-        <img src="/static/amondo-white.svg" alt="Amondo logo" />
+        <Hero />
+        <Imprints />
+        <Footer />
     </div>
 );
 
