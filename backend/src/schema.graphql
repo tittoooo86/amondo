@@ -1,9 +1,10 @@
 # import * from './generated/prisma.graphql'
 
 type Mutation {
-    blabla: String
+    createAsset(url: String!): Assets
 }
 
 type Query {
     imprints: [Imprint]!
+    imprint(where: ImprintWhereUniqueInput!): Imprint
 }

@@ -5,6 +5,7 @@ import gql from "graphql-tag";
 
 import Card from "../Card";
 import { Wrapper, Text, Grid, Line, LargeCircle, SmallCircle } from "./styles";
+import Assets from "./assets";
 
 const IMPRINTS_QUERY = gql`
     query IMPRINTS_QUERY {
@@ -19,6 +20,9 @@ const IMPRINTS_QUERY = gql`
 `;
 
 class Imprints extends Component {
+    componentDidMount() {
+        console.log(Assets.length);
+    }
     render() {
         return (
             <Wrapper>

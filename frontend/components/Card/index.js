@@ -11,7 +11,6 @@ const Wrapper = styled.div`
     justify-content: flex-end;
     position: relative;
     height: 320px;
-    width: 235px;
     margin-bottom: 20px;
     padding: 10px;
     background-size: cover;
