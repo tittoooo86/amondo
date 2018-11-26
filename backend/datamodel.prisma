@@ -1,5 +1,13 @@
-type User {
+type Assets {
     id: ID! @unique
-    name: String!
-    email: String! @unique
+    url: String!
+}
+type Imprint {
+    id: ID! @unique
+    artist: String!
+    startDate: String!
+    location: String!
+    image: String!
+    asset_order: [String]
+    assets: [Assets]
 }

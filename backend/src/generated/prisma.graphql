@@ -1,180 +1,72 @@
 # source: https://eu1.prisma.sh/amondo/amondo/dev
-# timestamp: Sun Nov 25 2018 17:57:13 GMT+0100 (CET)
+# timestamp: Mon Nov 26 2018 21:57:52 GMT+0100 (CET)
 
-type AggregateUser {
+type AggregateAssets {
   count: Int!
 }
 
-type BatchPayload {
-  """The number of nodes that have been affected by the Batch operation."""
-  count: Long!
+type AggregateImprint {
+  count: Int!
 }
 
-"""
-The `Long` scalar type represents non-fractional signed whole numeric values.
-Long can represent values between -(2^63) and 2^63 - 1.
-"""
-scalar Long
-
-type Mutation {
-  createUser(data: UserCreateInput!): User!
-  updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
-  deleteUser(where: UserWhereUniqueInput!): User
-  upsertUser(where: UserWhereUniqueInput!, create: UserCreateInput!, update: UserUpdateInput!): User!
-  updateManyUsers(data: UserUpdateManyMutationInput!, where: UserWhereInput): BatchPayload!
-  deleteManyUsers(where: UserWhereInput): BatchPayload!
-}
-
-enum MutationType {
-  CREATED
-  UPDATED
-  DELETED
-}
-
-"""An object with an ID"""
-interface Node {
-  """The id of the object."""
+type Assets implements Node {
   id: ID!
-}
-
-"""Information about pagination in a connection."""
-type PageInfo {
-  """When paginating forwards, are there more items?"""
-  hasNextPage: Boolean!
-
-  """When paginating backwards, are there more items?"""
-  hasPreviousPage: Boolean!
-
-  """When paginating backwards, the cursor to continue."""
-  startCursor: String
-
-  """When paginating forwards, the cursor to continue."""
-  endCursor: String
-}
-
-type Query {
-  users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User]!
-  user(where: UserWhereUniqueInput!): User
-  usersConnection(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
-
-  """Fetches an object given its ID"""
-  node(
-    """The ID of an object"""
-    id: ID!
-  ): Node
-}
-
-type Subscription {
-  user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
-}
-
-type User implements Node {
-  id: ID!
-  name: String!
-  email: String!
+  url: String!
 }
 
 """A connection to a list of items."""
-type UserConnection {
+type AssetsConnection {
   """Information to aid in pagination."""
   pageInfo: PageInfo!
 
   """A list of edges."""
-  edges: [UserEdge]!
-  aggregate: AggregateUser!
+  edges: [AssetsEdge]!
+  aggregate: AggregateAssets!
 }
 
-input UserCreateInput {
-  name: String!
-  email: String!
+input AssetsCreateInput {
+  url: String!
+}
+
+input AssetsCreateManyInput {
+  create: [AssetsCreateInput!]
+  connect: [AssetsWhereUniqueInput!]
 }
 
 """An edge in a connection."""
-type UserEdge {
+type AssetsEdge {
   """The item at the end of the edge."""
-  node: User!
+  node: Assets!
 
   """A cursor for use in pagination."""
   cursor: String!
 }
 
-enum UserOrderByInput {
+enum AssetsOrderByInput {
   id_ASC
   id_DESC
-  name_ASC
-  name_DESC
-  email_ASC
-  email_DESC
+  url_ASC
+  url_DESC
   updatedAt_ASC
   updatedAt_DESC
   createdAt_ASC
   createdAt_DESC
 }
 
-type UserPreviousValues {
+type AssetsPreviousValues {
   id: ID!
-  name: String!
-  email: String!
+  url: String!
 }
 
-type UserSubscriptionPayload {
-  mutation: MutationType!
-  node: User
-  updatedFields: [String!]
-  previousValues: UserPreviousValues
-}
-
-input UserSubscriptionWhereInput {
+input AssetsScalarWhereInput {
   """Logical AND on all given filters."""
-  AND: [UserSubscriptionWhereInput!]
+  AND: [AssetsScalarWhereInput!]
 
   """Logical OR on all given filters."""
-  OR: [UserSubscriptionWhereInput!]
+  OR: [AssetsScalarWhereInput!]
 
   """Logical NOT on all given filters combined by AND."""
-  NOT: [UserSubscriptionWhereInput!]
-
-  """
-  The subscription event gets dispatched when it's listed in mutation_in
-  """
-  mutation_in: [MutationType!]
-
-  """
-  The subscription event gets only dispatched when one of the updated fields names is included in this list
-  """
-  updatedFields_contains: String
-
-  """
-  The subscription event gets only dispatched when all of the field names included in this list have been updated
-  """
-  updatedFields_contains_every: [String!]
-
-  """
-  The subscription event gets only dispatched when some of the field names included in this list have been updated
-  """
-  updatedFields_contains_some: [String!]
-  node: UserWhereInput
-}
-
-input UserUpdateInput {
-  name: String
-  email: String
-}
-
-input UserUpdateManyMutationInput {
-  name: String
-  email: String
-}
-
-input UserWhereInput {
-  """Logical AND on all given filters."""
-  AND: [UserWhereInput!]
-
-  """Logical OR on all given filters."""
-  OR: [UserWhereInput!]
-
-  """Logical NOT on all given filters combined by AND."""
-  NOT: [UserWhereInput!]
+  NOT: [AssetsScalarWhereInput!]
   id: ID
 
   """All values that are not equal to given value."""
@@ -215,89 +107,640 @@ input UserWhereInput {
 
   """All values not ending with the given string."""
   id_not_ends_with: ID
-  name: String
+  url: String
 
   """All values that are not equal to given value."""
-  name_not: String
+  url_not: String
 
   """All values that are contained in given list."""
-  name_in: [String!]
+  url_in: [String!]
 
   """All values that are not contained in given list."""
-  name_not_in: [String!]
+  url_not_in: [String!]
 
   """All values less than the given value."""
-  name_lt: String
+  url_lt: String
 
   """All values less than or equal the given value."""
-  name_lte: String
+  url_lte: String
 
   """All values greater than the given value."""
-  name_gt: String
+  url_gt: String
 
   """All values greater than or equal the given value."""
-  name_gte: String
+  url_gte: String
 
   """All values containing the given string."""
-  name_contains: String
+  url_contains: String
 
   """All values not containing the given string."""
-  name_not_contains: String
+  url_not_contains: String
 
   """All values starting with the given string."""
-  name_starts_with: String
+  url_starts_with: String
 
   """All values not starting with the given string."""
-  name_not_starts_with: String
+  url_not_starts_with: String
 
   """All values ending with the given string."""
-  name_ends_with: String
+  url_ends_with: String
 
   """All values not ending with the given string."""
-  name_not_ends_with: String
-  email: String
-
-  """All values that are not equal to given value."""
-  email_not: String
-
-  """All values that are contained in given list."""
-  email_in: [String!]
-
-  """All values that are not contained in given list."""
-  email_not_in: [String!]
-
-  """All values less than the given value."""
-  email_lt: String
-
-  """All values less than or equal the given value."""
-  email_lte: String
-
-  """All values greater than the given value."""
-  email_gt: String
-
-  """All values greater than or equal the given value."""
-  email_gte: String
-
-  """All values containing the given string."""
-  email_contains: String
-
-  """All values not containing the given string."""
-  email_not_contains: String
-
-  """All values starting with the given string."""
-  email_starts_with: String
-
-  """All values not starting with the given string."""
-  email_not_starts_with: String
-
-  """All values ending with the given string."""
-  email_ends_with: String
-
-  """All values not ending with the given string."""
-  email_not_ends_with: String
+  url_not_ends_with: String
 }
 
-input UserWhereUniqueInput {
+type AssetsSubscriptionPayload {
+  mutation: MutationType!
+  node: Assets
+  updatedFields: [String!]
+  previousValues: AssetsPreviousValues
+}
+
+input AssetsSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [AssetsSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [AssetsSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [AssetsSubscriptionWhereInput!]
+
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: AssetsWhereInput
+}
+
+input AssetsUpdateDataInput {
+  url: String
+}
+
+input AssetsUpdateInput {
+  url: String
+}
+
+input AssetsUpdateManyDataInput {
+  url: String
+}
+
+input AssetsUpdateManyInput {
+  create: [AssetsCreateInput!]
+  connect: [AssetsWhereUniqueInput!]
+  disconnect: [AssetsWhereUniqueInput!]
+  delete: [AssetsWhereUniqueInput!]
+  update: [AssetsUpdateWithWhereUniqueNestedInput!]
+  updateMany: [AssetsUpdateManyWithWhereNestedInput!]
+  deleteMany: [AssetsScalarWhereInput!]
+  upsert: [AssetsUpsertWithWhereUniqueNestedInput!]
+}
+
+input AssetsUpdateManyMutationInput {
+  url: String
+}
+
+input AssetsUpdateManyWithWhereNestedInput {
+  where: AssetsScalarWhereInput!
+  data: AssetsUpdateManyDataInput!
+}
+
+input AssetsUpdateWithWhereUniqueNestedInput {
+  where: AssetsWhereUniqueInput!
+  data: AssetsUpdateDataInput!
+}
+
+input AssetsUpsertWithWhereUniqueNestedInput {
+  where: AssetsWhereUniqueInput!
+  update: AssetsUpdateDataInput!
+  create: AssetsCreateInput!
+}
+
+input AssetsWhereInput {
+  """Logical AND on all given filters."""
+  AND: [AssetsWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [AssetsWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [AssetsWhereInput!]
   id: ID
-  email: String
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  url: String
+
+  """All values that are not equal to given value."""
+  url_not: String
+
+  """All values that are contained in given list."""
+  url_in: [String!]
+
+  """All values that are not contained in given list."""
+  url_not_in: [String!]
+
+  """All values less than the given value."""
+  url_lt: String
+
+  """All values less than or equal the given value."""
+  url_lte: String
+
+  """All values greater than the given value."""
+  url_gt: String
+
+  """All values greater than or equal the given value."""
+  url_gte: String
+
+  """All values containing the given string."""
+  url_contains: String
+
+  """All values not containing the given string."""
+  url_not_contains: String
+
+  """All values starting with the given string."""
+  url_starts_with: String
+
+  """All values not starting with the given string."""
+  url_not_starts_with: String
+
+  """All values ending with the given string."""
+  url_ends_with: String
+
+  """All values not ending with the given string."""
+  url_not_ends_with: String
+}
+
+input AssetsWhereUniqueInput {
+  id: ID
+}
+
+type BatchPayload {
+  """The number of nodes that have been affected by the Batch operation."""
+  count: Long!
+}
+
+type Imprint implements Node {
+  id: ID!
+  artist: String!
+  startDate: String!
+  location: String!
+  image: String!
+  asset_order: [String!]!
+  assets(where: AssetsWhereInput, orderBy: AssetsOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Assets!]
+}
+
+"""A connection to a list of items."""
+type ImprintConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [ImprintEdge]!
+  aggregate: AggregateImprint!
+}
+
+input ImprintCreateasset_orderInput {
+  set: [String!]
+}
+
+input ImprintCreateInput {
+  artist: String!
+  startDate: String!
+  location: String!
+  image: String!
+  asset_order: ImprintCreateasset_orderInput
+  assets: AssetsCreateManyInput
+}
+
+"""An edge in a connection."""
+type ImprintEdge {
+  """The item at the end of the edge."""
+  node: Imprint!
+
+  """A cursor for use in pagination."""
+  cursor: String!
+}
+
+enum ImprintOrderByInput {
+  id_ASC
+  id_DESC
+  artist_ASC
+  artist_DESC
+  startDate_ASC
+  startDate_DESC
+  location_ASC
+  location_DESC
+  image_ASC
+  image_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  createdAt_ASC
+  createdAt_DESC
+}
+
+type ImprintPreviousValues {
+  id: ID!
+  artist: String!
+  startDate: String!
+  location: String!
+  image: String!
+  asset_order: [String!]!
+}
+
+type ImprintSubscriptionPayload {
+  mutation: MutationType!
+  node: Imprint
+  updatedFields: [String!]
+  previousValues: ImprintPreviousValues
+}
+
+input ImprintSubscriptionWhereInput {
+  """Logical AND on all given filters."""
+  AND: [ImprintSubscriptionWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [ImprintSubscriptionWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [ImprintSubscriptionWhereInput!]
+
+  """
+  The subscription event gets dispatched when it's listed in mutation_in
+  """
+  mutation_in: [MutationType!]
+
+  """
+  The subscription event gets only dispatched when one of the updated fields names is included in this list
+  """
+  updatedFields_contains: String
+
+  """
+  The subscription event gets only dispatched when all of the field names included in this list have been updated
+  """
+  updatedFields_contains_every: [String!]
+
+  """
+  The subscription event gets only dispatched when some of the field names included in this list have been updated
+  """
+  updatedFields_contains_some: [String!]
+  node: ImprintWhereInput
+}
+
+input ImprintUpdateasset_orderInput {
+  set: [String!]
+}
+
+input ImprintUpdateInput {
+  artist: String
+  startDate: String
+  location: String
+  image: String
+  asset_order: ImprintUpdateasset_orderInput
+  assets: AssetsUpdateManyInput
+}
+
+input ImprintUpdateManyMutationInput {
+  artist: String
+  startDate: String
+  location: String
+  image: String
+  asset_order: ImprintUpdateasset_orderInput
+}
+
+input ImprintWhereInput {
+  """Logical AND on all given filters."""
+  AND: [ImprintWhereInput!]
+
+  """Logical OR on all given filters."""
+  OR: [ImprintWhereInput!]
+
+  """Logical NOT on all given filters combined by AND."""
+  NOT: [ImprintWhereInput!]
+  id: ID
+
+  """All values that are not equal to given value."""
+  id_not: ID
+
+  """All values that are contained in given list."""
+  id_in: [ID!]
+
+  """All values that are not contained in given list."""
+  id_not_in: [ID!]
+
+  """All values less than the given value."""
+  id_lt: ID
+
+  """All values less than or equal the given value."""
+  id_lte: ID
+
+  """All values greater than the given value."""
+  id_gt: ID
+
+  """All values greater than or equal the given value."""
+  id_gte: ID
+
+  """All values containing the given string."""
+  id_contains: ID
+
+  """All values not containing the given string."""
+  id_not_contains: ID
+
+  """All values starting with the given string."""
+  id_starts_with: ID
+
+  """All values not starting with the given string."""
+  id_not_starts_with: ID
+
+  """All values ending with the given string."""
+  id_ends_with: ID
+
+  """All values not ending with the given string."""
+  id_not_ends_with: ID
+  artist: String
+
+  """All values that are not equal to given value."""
+  artist_not: String
+
+  """All values that are contained in given list."""
+  artist_in: [String!]
+
+  """All values that are not contained in given list."""
+  artist_not_in: [String!]
+
+  """All values less than the given value."""
+  artist_lt: String
+
+  """All values less than or equal the given value."""
+  artist_lte: String
+
+  """All values greater than the given value."""
+  artist_gt: String
+
+  """All values greater than or equal the given value."""
+  artist_gte: String
+
+  """All values containing the given string."""
+  artist_contains: String
+
+  """All values not containing the given string."""
+  artist_not_contains: String
+
+  """All values starting with the given string."""
+  artist_starts_with: String
+
+  """All values not starting with the given string."""
+  artist_not_starts_with: String
+
+  """All values ending with the given string."""
+  artist_ends_with: String
+
+  """All values not ending with the given string."""
+  artist_not_ends_with: String
+  startDate: String
+
+  """All values that are not equal to given value."""
+  startDate_not: String
+
+  """All values that are contained in given list."""
+  startDate_in: [String!]
+
+  """All values that are not contained in given list."""
+  startDate_not_in: [String!]
+
+  """All values less than the given value."""
+  startDate_lt: String
+
+  """All values less than or equal the given value."""
+  startDate_lte: String
+
+  """All values greater than the given value."""
+  startDate_gt: String
+
+  """All values greater than or equal the given value."""
+  startDate_gte: String
+
+  """All values containing the given string."""
+  startDate_contains: String
+
+  """All values not containing the given string."""
+  startDate_not_contains: String
+
+  """All values starting with the given string."""
+  startDate_starts_with: String
+
+  """All values not starting with the given string."""
+  startDate_not_starts_with: String
+
+  """All values ending with the given string."""
+  startDate_ends_with: String
+
+  """All values not ending with the given string."""
+  startDate_not_ends_with: String
+  location: String
+
+  """All values that are not equal to given value."""
+  location_not: String
+
+  """All values that are contained in given list."""
+  location_in: [String!]
+
+  """All values that are not contained in given list."""
+  location_not_in: [String!]
+
+  """All values less than the given value."""
+  location_lt: String
+
+  """All values less than or equal the given value."""
+  location_lte: String
+
+  """All values greater than the given value."""
+  location_gt: String
+
+  """All values greater than or equal the given value."""
+  location_gte: String
+
+  """All values containing the given string."""
+  location_contains: String
+
+  """All values not containing the given string."""
+  location_not_contains: String
+
+  """All values starting with the given string."""
+  location_starts_with: String
+
+  """All values not starting with the given string."""
+  location_not_starts_with: String
+
+  """All values ending with the given string."""
+  location_ends_with: String
+
+  """All values not ending with the given string."""
+  location_not_ends_with: String
+  image: String
+
+  """All values that are not equal to given value."""
+  image_not: String
+
+  """All values that are contained in given list."""
+  image_in: [String!]
+
+  """All values that are not contained in given list."""
+  image_not_in: [String!]
+
+  """All values less than the given value."""
+  image_lt: String
+
+  """All values less than or equal the given value."""
+  image_lte: String
+
+  """All values greater than the given value."""
+  image_gt: String
+
+  """All values greater than or equal the given value."""
+  image_gte: String
+
+  """All values containing the given string."""
+  image_contains: String
+
+  """All values not containing the given string."""
+  image_not_contains: String
+
+  """All values starting with the given string."""
+  image_starts_with: String
+
+  """All values not starting with the given string."""
+  image_not_starts_with: String
+
+  """All values ending with the given string."""
+  image_ends_with: String
+
+  """All values not ending with the given string."""
+  image_not_ends_with: String
+  assets_every: AssetsWhereInput
+  assets_some: AssetsWhereInput
+  assets_none: AssetsWhereInput
+}
+
+input ImprintWhereUniqueInput {
+  id: ID
+}
+
+"""
+The `Long` scalar type represents non-fractional signed whole numeric values.
+Long can represent values between -(2^63) and 2^63 - 1.
+"""
+scalar Long
+
+type Mutation {
+  createImprint(data: ImprintCreateInput!): Imprint!
+  createAssets(data: AssetsCreateInput!): Assets!
+  updateImprint(data: ImprintUpdateInput!, where: ImprintWhereUniqueInput!): Imprint
+  updateAssets(data: AssetsUpdateInput!, where: AssetsWhereUniqueInput!): Assets
+  deleteImprint(where: ImprintWhereUniqueInput!): Imprint
+  deleteAssets(where: AssetsWhereUniqueInput!): Assets
+  upsertImprint(where: ImprintWhereUniqueInput!, create: ImprintCreateInput!, update: ImprintUpdateInput!): Imprint!
+  upsertAssets(where: AssetsWhereUniqueInput!, create: AssetsCreateInput!, update: AssetsUpdateInput!): Assets!
+  updateManyImprints(data: ImprintUpdateManyMutationInput!, where: ImprintWhereInput): BatchPayload!
+  updateManyAssetses(data: AssetsUpdateManyMutationInput!, where: AssetsWhereInput): BatchPayload!
+  deleteManyImprints(where: ImprintWhereInput): BatchPayload!
+  deleteManyAssetses(where: AssetsWhereInput): BatchPayload!
+}
+
+enum MutationType {
+  CREATED
+  UPDATED
+  DELETED
+}
+
+"""An object with an ID"""
+interface Node {
+  """The id of the object."""
+  id: ID!
+}
+
+"""Information about pagination in a connection."""
+type PageInfo {
+  """When paginating forwards, are there more items?"""
+  hasNextPage: Boolean!
+
+  """When paginating backwards, are there more items?"""
+  hasPreviousPage: Boolean!
+
+  """When paginating backwards, the cursor to continue."""
+  startCursor: String
+
+  """When paginating forwards, the cursor to continue."""
+  endCursor: String
+}
+
+type Query {
+  imprints(where: ImprintWhereInput, orderBy: ImprintOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Imprint]!
+  assetses(where: AssetsWhereInput, orderBy: AssetsOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Assets]!
+  imprint(where: ImprintWhereUniqueInput!): Imprint
+  assets(where: AssetsWhereUniqueInput!): Assets
+  imprintsConnection(where: ImprintWhereInput, orderBy: ImprintOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): ImprintConnection!
+  assetsesConnection(where: AssetsWhereInput, orderBy: AssetsOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): AssetsConnection!
+
+  """Fetches an object given its ID"""
+  node(
+    """The ID of an object"""
+    id: ID!
+  ): Node
+}
+
+type Subscription {
+  imprint(where: ImprintSubscriptionWhereInput): ImprintSubscriptionPayload
+  assets(where: AssetsSubscriptionWhereInput): AssetsSubscriptionPayload
 }

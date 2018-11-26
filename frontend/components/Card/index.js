@@ -1,5 +1,8 @@
 import React, { Component } from "react";
+import PropTypes from "prop-types";
 import styled from "styled-components";
+import Link from "next/link";
+import moment from "moment";
 
 const Wrapper = styled.div`
     display: flex;
@@ -51,16 +54,33 @@ const Subtitle = styled.h2`
     line-height: 13px;
 `;
 
-const Card = () => (
-    <Wrapper
-        style={{
-            backgroundImage:
-                "url(https://res.amondo.com/amondo-media/image/upload/dpr_2.0,c_fill,w_300/v1542039196/RXZlbnRzMzAzM2ltYWdl.jpg)"
+const Card = ({ item }) => (
+    <Link
+        href={{
+            pathname: "/imprint",
+            query: { id: item.id }
         }}
     >
-        <Title>Clockenflap 2018</Title>
-        <Subtitle>Central Harbourfront, Hong Kong · 9th Nov</Subtitle>
-    </Wrapper>
+        <Wrapper
+            style={{
+                backgroundImage: `url(${item.image})`
+            }}
+        >
+            <Title>{item.artist}</Title>
+            <Subtitle>
+                {item.location} · {moment(item.startDate).format("Do MMM")}
+            </Subtitle>
+        </Wrapper>
+    </Link>
 );
+
+Card.propTypes = {
+    item: PropTypes.shape({
+        artist: PropTypes.string.isRequired,
+        image: PropTypes.string.isRequired,
+        location: PropTypes.string.isRequired,
+        startDate: PropTypes.string.isRequired
+    })
+};
 
 export default Card;

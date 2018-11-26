@@ -1,7 +1,9 @@
+# import * from './generated/prisma.graphql'
+
 type Mutation {
     blabla: String
 }
 
 type Query {
-    blabla: String
+    imprints: [Imprint]!
 }
