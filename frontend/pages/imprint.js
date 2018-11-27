@@ -1,9 +1,5 @@
 import Detail from "../components/Detail";
 
-const DetailPage = props => (
-    <div>
-        <Detail id={props.query.id} />
-    </div>
-);
+const DetailPage = props => <Detail id={props.query.id} />;
 
 export default DetailPage;

@@ -18,8 +18,9 @@ const SINGLE_IMPRINT_QUERY = gql`
 `;
 
 const Wrapper = styled.div`
-    max-width: 75em;
+    max-width: 1160px;
     padding: 0 12px;
+    margin: 0 auto;
 `;
 
 const Header = styled.div`
