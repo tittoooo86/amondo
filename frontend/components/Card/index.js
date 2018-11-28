@@ -15,6 +15,8 @@ const Wrapper = styled.div`
     padding: 10px;
     background-size: cover;
     background-position: center;
+    background-color: ${props => props.theme.yellow};
+    cursor: pointer;
 
     &:after {
         content: "";

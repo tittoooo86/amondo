@@ -1,9 +1,21 @@
 import React, { Component } from "react";
-import { Query } from "react-apollo";
+import { Query, Mutation } from "react-apollo";
 import gql from "graphql-tag";
-import styled from "styled-components";
 import Link from "next/link";
 import moment from "moment";
+
+import {
+    Wrapper,
+    Header,
+    Logo,
+    LinkWrapper,
+    Text,
+    Bg,
+    Artist,
+    Details,
+    DetailsText
+} from "./styles";
+import { perPage } from "../../config";
 
 const SINGLE_IMPRINT_QUERY = gql`
     query SINGLE_IMPRINT_QUERY($id: ID!) {
@@ -17,121 +29,37 @@ const SINGLE_IMPRINT_QUERY = gql`
     }
 `;
 
-const Wrapper = styled.div`
-    max-width: 1160px;
-    padding: 0 12px;
-    margin: 0 auto;
-`;
-
-const Header = styled.div`
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 63px 0px 53px;
-`;
-
-const Logo = styled.img`
-    margin-top: -13px;
-`;
-
-const LinkWrapper = styled.div`
-    display: flex;
-    justify-content: space-between;
-`;
-
-const Text = styled.p`
-    color: ${props => props.theme.text};
-    font-weight: 100;
-    text-transform: uppercase;
-    font-size: 16px;
-    letter-spacing: 4px;
-    line-height: 24px;
-    margin: 1px 20px 0 0;
-    font-family: "trumpgothicpro", Inconsolata, Helvetica, sans-serif;
-
-    span {
-        color: ${props => props.theme.white};
-    }
-`;
-
-const Bg = styled.div`
-    position: absolute;
-    width: 100vw;
-    height: 100vh;
-    top: 0px;
-    left: 0px;
-    background-size: cover;
-    opacity: 0.4;
-    display: block;
-    z-index: -1;
-    background-repeat: no-repeat;
-    background-position: center center;
-`;
-
-const Artist = styled.h1`
-    font-size: 55px;
-    font-weight: 600;
-    text-transform: uppercase;
-    overflow-wrap: break-word;
-    font-family: trumpgothicpro, Inconsolata, Helvetica, sans-serif;
-    margin: 0px 0px 60px;
-    color: ${props => props.theme.white};
-    line-height: 1;
-    letter-spacing: 4px;
-
-    @media (min-width: 30em) {
-        font-size: 66px;
-    }
-
-    @media (min-width: 48em) {
-        font-size: 112px;
-    }
-
-    @media (min-width: 64em) {
-        font-size: 144px;
-    }
-`;
-
-const Details = styled.div`
-    display: flex;
-
-    > div {
-        display: flex;
-        justify-content: space-between;
-        @media (min-width: 48em) {
-            margin-right: 50px;
+const ALL_ASSETS_QUERY = gql`
+    query ALL_ASSETS_QUERY($skip: Int =0, $first: Int = ${perPage}) {
+        assetses(first: $first, skip: $skip, orderBy: createdAt_DESC) {
+            id
+            url
         }
     }
-
-    svg {
-        margin-right: 20px;
-    }
 `;
 
-const DetailsText = styled.p`
-    font-size: 18px;
-    font-family: "franklin-gothic-urw", Helvetica, sans-serif;
-    font-weight: 400;
-    margin: 2px 5px 0 0;
-    color: ${props => props.theme.white};
-    line-height: 1;
-
-    @media (min-width: 48em) {
-        font-size: 22px;
-    }
-
-    span {
-        display: block;
-        font-size: 14px;
-        font-family: "franklin-gothic-urw", Helvetica, sans-serif;
-        letter-spacing: 1px;
-        text-transform: uppercase;
-        opacity: 0.6;
-        margin-top: 5px;
+const CREATE_ASSETS_MUTATION = gql`
+    mutation CREATE_ASSETS_MUTATION($url: String!, $origID: Int!) {
+        createAsset(url: $url, origID: $origID) {
+            id
+        }
     }
 `;
 
 class Detail extends Component {
+    // generateAssets = async (e, createAssetsMutation) => {
+    //     console.log(order.map(String));
+
+    //     // Assets.map(async asset => {
+    //     //     // console.log(asset.file.url);
+    //     //     const res = await createAssetsMutation({
+    //     //         variables: {
+    //     //             url: asset.file.url,
+    //     //             origID: asset.id
+    //     //         }
+    //     //     });
+    //     // });
+    // };
     render() {
         return (
             <Wrapper>
@@ -166,6 +94,18 @@ class Detail extends Component {
                         </a>
                     </LinkWrapper>
                 </Header>
+                {/* <Mutation
+                    mutation={CREATE_ASSETS_MUTATION}
+                    variables={this.state}
+                >
+                    {(createAssets, { loading, error }) => (
+                        <button
+                            onClick={e => this.generateAssets(e, createAssets)}
+                        >
+                            generate
+                        </button>
+                    )}
+                </Mutation> */}
                 <Query
                     query={SINGLE_IMPRINT_QUERY}
                     variables={{ id: this.props.id }}
@@ -224,6 +164,32 @@ class Detail extends Component {
                                         </DetailsText>
                                     </div>
                                 </Details>
+
+                                <Query
+                                    query={ALL_ASSETS_QUERY}
+                                    variables={{ skip: 0 }}
+                                >
+                                    {({ data, error, loading }) => {
+                                        if (loading) return <p>Loading...</p>;
+                                        if (error)
+                                            return (
+                                                <p>Error: {error.message}</p>
+                                            );
+                                        return (
+                                            <div>
+                                                {data.assetses.map(item => {
+                                                    return (
+                                                        <img
+                                                            key={item.id}
+                                                            src={item.url}
+                                                            alt=""
+                                                        />
+                                                    );
+                                                })}
+                                            </div>
+                                        );
+                                    }}
+                                </Query>
                             </React.Fragment>
                         );
                     }}

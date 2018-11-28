@@ -1,6 +1,6 @@
 const Mutation = {
     async createAsset(parent, args, ctx, info) {
-        const item = await ctx.db.mutation.createItem(
+        const item = await ctx.db.mutation.createAssets(
             {
                 data: {
                     ...args

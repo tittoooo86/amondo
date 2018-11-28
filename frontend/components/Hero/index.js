@@ -6,6 +6,10 @@ const Wrapper = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
+
+    @media (max-width: 48em) {
+        margin-top: 33px;
+    }
 `;
 const Title = styled.h1`
     font-family: trumpgothicpro, Inconsolata, Helvetica, sans-serif;
@@ -15,6 +19,12 @@ const Title = styled.h1`
     color: ${props => props.theme.white};
     letter-spacing: 0.6px;
     margin: 62px 0 0;
+
+    @media (max-width: 48em) {
+        text-align: center;
+        line-height: 59px;
+        margin: 84px 0 23px 7px;
+    }
 
     span {
         position: relative;

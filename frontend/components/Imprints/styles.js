@@ -44,6 +44,7 @@ export const LargeCircle = styled.div`
     z-index: 0;
     width: 200px;
     height: 200px;
+    z-index: -1;
 `;
 
 export const SmallCircle = styled.div`

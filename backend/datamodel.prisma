@@ -1,5 +1,6 @@
 type Assets {
     id: ID! @unique
+    origID: Int!
     url: String!
 }
 type Imprint {
