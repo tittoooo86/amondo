@@ -1,5 +1,20 @@
 import React from "react";
 import styled from "styled-components";
+import Router from "next/router";
+import Link from "next/link";
+import NProgress from "nprogress";
+
+Router.onRouteChangeStart = () => {
+    NProgress.start();
+};
+
+Router.onRouteChangeComplete = () => {
+    NProgress.done();
+};
+
+Router.onRouteChangeError = () => {
+    NProgress.done();
+};
 
 const Wrapper = styled.div`
     margin-top: 80px;
@@ -8,7 +23,7 @@ const Wrapper = styled.div`
     align-items: center;
 
     @media (max-width: 48em) {
-        margin-top: 33px;
+        margin-top: 40px;
     }
 `;
 const Title = styled.h1`
@@ -18,12 +33,12 @@ const Title = styled.h1`
     font-size: 52px;
     color: ${props => props.theme.white};
     letter-spacing: 0.6px;
-    margin: 62px 0 0;
+    margin: 52px 0 0;
 
     @media (max-width: 48em) {
         text-align: center;
         line-height: 59px;
-        margin: 84px 0 23px 7px;
+        margin: 74px 0 23px 7px;
     }
 
     span {
@@ -72,7 +87,11 @@ const Cta = styled.a`
 
 const Hero = () => (
     <Wrapper>
-        <img src="/static/amondo-white.svg" alt="Amondo logo" />
+        <Link href="/">
+            <a>
+                <img src="/static/amondo-white.svg" alt="Amondo logo" />
+            </a>
+        </Link>
 
         <Title>
             THE&nbsp; <span>EXPERIENCE</span>&nbsp; PLATFORM

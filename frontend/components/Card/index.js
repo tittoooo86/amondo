@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import styled from "styled-components";
 import Link from "next/link";
 import moment from "moment";
+import NProgress from "nprogress";
 
 const Wrapper = styled.div`
     display: flex;
@@ -62,16 +63,18 @@ const Card = ({ item }) => (
             query: { id: item.id }
         }}
     >
-        <Wrapper
-            style={{
-                backgroundImage: `url(${item.image})`
-            }}
-        >
-            <Title>{item.artist}</Title>
-            <Subtitle>
-                {item.location} · {moment(item.startDate).format("Do MMM")}
-            </Subtitle>
-        </Wrapper>
+        <a onClick={() => NProgress.start()}>
+            <Wrapper
+                style={{
+                    backgroundImage: `url(${item.image})`
+                }}
+            >
+                <Title>{item.artist}</Title>
+                <Subtitle>
+                    {item.location} · {moment(item.startDate).format("Do MMM")}
+                </Subtitle>
+            </Wrapper>
+        </a>
     </Link>
 );
 
