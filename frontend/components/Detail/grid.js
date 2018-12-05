@@ -6,6 +6,7 @@ import InfiniteScroll from "react-infinite-scroller";
 
 import { GridContainer, GridItem } from "./styles";
 import { perPage } from "../../config";
+import Footer from "./footer";
 
 const ALL_ASSETS_QUERY = gql`
     query ALL_ASSETS_QUERY($first: Int!, $skip: Int!) {
@@ -34,30 +35,35 @@ class Grid extends Component {
     render() {
         let props = this.props;
 
+        console.log(props.hasMore);
+
         return (
-            <InfiniteScroll
-                pageStart={0}
-                loadMore={() => props.loadMorePosts()}
-                hasMore={props.hasMore}
-                loader={
-                    <div>
-                        <div className="loader">Loading ...</div>
-                    </div>
-                }
-            >
-                <GridContainer>
-                    <Masonry
-                        options={masonryOptions}
-                        updateOnEachImageLoad={false}
-                    >
-                        {this.props.data.assetses.map(item => (
-                            <GridItem key={item.url}>
-                                <img src={item.url} alt="" />
-                            </GridItem>
-                        ))}
-                    </Masonry>
-                </GridContainer>
-            </InfiniteScroll>
+            <React.Fragment>
+                <InfiniteScroll
+                    pageStart={0}
+                    loadMore={() => props.loadMorePosts()}
+                    hasMore={props.hasMore}
+                    loader={
+                        <div>
+                            <div className="loader">Loading ...</div>
+                        </div>
+                    }
+                >
+                    <GridContainer>
+                        <Masonry
+                            options={masonryOptions}
+                            updateOnEachImageLoad={false}
+                        >
+                            {this.props.data.assetses.map(item => (
+                                <GridItem key={item.url}>
+                                    <img src={item.url} alt="" />
+                                </GridItem>
+                            ))}
+                        </Masonry>
+                    </GridContainer>
+                </InfiniteScroll>
+                {!props.hasMore && <Footer imprint={props.imprint} />}
+            </React.Fragment>
         );
     }
 }

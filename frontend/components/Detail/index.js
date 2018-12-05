@@ -5,7 +5,6 @@ import gql from "graphql-tag";
 import { Wrapper, Bg } from "./styles";
 import Header from "./header";
 import Grid from "./grid";
-import Footer from "./footer";
 
 const SINGLE_IMPRINT_QUERY = gql`
     query SINGLE_IMPRINT_QUERY($id: ID!) {
@@ -65,8 +64,6 @@ class Detail extends Component {
                         if (loading) return <p>Loading...</p>;
                         if (error) return <p>Opps! something went wrong :[</p>;
 
-                        console.log(data.imprint);
-
                         return (
                             <React.Fragment>
                                 <Header imprint={data.imprint} />
@@ -80,8 +77,7 @@ class Detail extends Component {
                                     alt=""
                                 />
 
-                                <Grid />
-                                <Footer imprint={data.imprint} />
+                                <Grid imprint={data.imprint} />
                             </React.Fragment>
                         );
                     }}
