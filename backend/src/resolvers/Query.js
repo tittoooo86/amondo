@@ -5,11 +5,8 @@ const Query = {
     // so we can forward the query from Yoga to Prisma
     imprints: forwardTo("db"),
     imprint: forwardTo("db"),
-    assetses: forwardTo("db")
-    // async imprints(parent, args, ctx, info) {
-    //     const imprints = await ctx.db.query.imprints();
-    //     return imprints;
-    // }
+    assetses: forwardTo("db"),
+    assetsesConnection: forwardTo("db")
 };
 
 module.exports = Query;

@@ -135,6 +135,9 @@ export const DetailsText = styled.p`
 
 export const GridContainer = styled.div`
     max-width: 1210px;
+    width: 100%;
+    padding-left: 0.5em;
+    padding-right: 0.5em;
     margin: 0 auto;
 `;
 export const GridItem = styled.div`

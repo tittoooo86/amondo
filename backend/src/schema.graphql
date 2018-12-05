@@ -13,4 +13,5 @@ type Query {
         skip: Int
         first: Int
     ): [Assets]!
+    assetsesConnection(where: AssetsWhereInput): AssetsConnection
 }
